@@ -1,0 +1,12 @@
+#POST http://localhost:8080//prompt
+#Content-Type: text/plain
+#
+#BeanPostProcessor что такое
+
+GET http://localhost:8080//exchange-rate
+
+
+
+
+
+

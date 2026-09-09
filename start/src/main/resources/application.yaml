@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: start
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+      chat:
+        options:
+          model: gpt-5.6-luna
