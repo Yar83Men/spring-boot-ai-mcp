@@ -1,4 +1,4 @@
-package com.openai.start;
+package com.openai.start.service;
 
 import com.openai.start.entity.ResponseEntity;
 import org.jspecify.annotations.NonNull;
