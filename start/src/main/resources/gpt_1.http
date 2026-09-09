@@ -3,7 +3,7 @@
 #
 #BeanPostProcessor что такое
 
-GET http://localhost:8080//exchange-rate
+GET http://localhost:8080//exchange
 
 
 
