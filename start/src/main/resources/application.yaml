@@ -1,9 +1,19 @@
 spring:
   application:
     name: start
+
+  docker:
+    compose:
+      enabled: true
+      file: compose.yml
+      lifecycle-management: start_and_stop
   ai:
     openai:
       api-key: ${OPEN_AI_KEY}
       chat:
         options:
           model: gpt-5.6-luna
+
+    vectorstore:
+      pgvector:
+        initialize-schema: true
