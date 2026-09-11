@@ -1,6 +1,6 @@
 package com.openai.start.controller;
 
-import com.openai.start.service.ParsingPdfService;
+import com.openai.start.service.DocumentService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/doc")
 public class DocumentController {
-    private final ParsingPdfService parsingPdfService;
+    private final DocumentService documentService;
 
-    public DocumentController(ParsingPdfService parsingPdfService) {
-        this.parsingPdfService = parsingPdfService;
+    public DocumentController(DocumentService documentService) {
+        this.documentService = documentService;
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -25,7 +25,7 @@ public class DocumentController {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("Пустой файл");
         }
-        parsingPdfService.parse(file);
+        documentService.parseAndSaveToRAG(file);
         return ResponseEntity.ok("Успешное сохранение файла " + file.getName());
     }
 }

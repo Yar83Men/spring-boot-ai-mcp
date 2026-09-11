@@ -1,0 +1,31 @@
+package com.openai.start.controller;
+
+import com.openai.start.service.ImageAIService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+@RestController
+@RequestMapping("/api/v1/image")
+public class ImageController {
+    private final ImageAIService imageAIService;
+
+    public ImageController(ImageAIService imageAIService) {
+        this.imageAIService = imageAIService;
+    }
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Выбор JPEG файла на распознавание", description = "Загрузите файл только формат JPEG")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return org.springframework.http.ResponseEntity.badRequest().body("Пустой файл");
+        }
+
+        return ResponseEntity.ok(imageAIService.getAIDescription(file));
+    }
+}
