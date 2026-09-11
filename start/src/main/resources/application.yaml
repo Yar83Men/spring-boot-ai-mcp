@@ -1,6 +1,6 @@
 spring:
   application:
-    name: start
+    name: openapi-worker
   servlet:
     multipart:
       max-file-size: 10MB
