@@ -100,7 +100,7 @@ public class ChatAIServiceImpl implements ChatAIService {
     public String exchange(@NonNull String message) {
         final var promptTemplate = new PromptTemplate(exhangeResource);
         final var map = new HashMap<String, Object>() {{
-            put("question", message + LocalDate.now());
+            put("question", message + " " + LocalDate.now());
             put("context", variant);
         }};
         final var userMessage = promptTemplate.create(map).getUserMessage();
