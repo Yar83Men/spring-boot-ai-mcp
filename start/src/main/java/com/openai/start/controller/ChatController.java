@@ -1,7 +1,10 @@
 package com.openai.start.controller;
 
+import com.openai.start.dto.InMemoryChatRequest;
 import com.openai.start.dto.VectorStoreRequest;
+import com.openai.start.entity.InMemoryChatEntity;
 import com.openai.start.service.ChatAIService;
+import com.openai.start.service.ChatMemoryService;
 import com.openai.start.service.RegStoreService;
 import com.openai.start.service.impl.ChatAIServiceImpl;
 import com.openai.start.entity.ResponseEntity;
@@ -18,10 +21,14 @@ import java.util.Map;
 public class ChatController {
     private final ChatAIService chatAIService;
     private final RegStoreService regStoreService;
+    private final ChatMemoryService chatMemoryService;
 
-    public ChatController(ChatAIServiceImpl chatAIService, RegStoreServiceImpl regStoreService) {
+    public ChatController(ChatAIServiceImpl chatAIService,
+                          RegStoreServiceImpl regStoreService,
+                          ChatMemoryService chatMemoryService) {
         this.chatAIService = chatAIService;
         this.regStoreService = regStoreService;
+        this.chatMemoryService = chatMemoryService;
     }
 
     @PostMapping("/message")
@@ -60,5 +67,12 @@ public class ChatController {
             "получение структурированной информации по данным с RAG хранилища, ранее загруженным данным")
     public String vectorStore(@NonNull @RequestBody VectorStoreRequest request) {
         return regStoreService.getFromVectorStore(request.question());
+    }
+
+    @PostMapping("/chat-with-memory")
+    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, " +
+            "сохранение до 10-ти диалогов в памяти")
+    public InMemoryChatEntity chatWithMemory(@NonNull @RequestBody InMemoryChatRequest request) {
+        return chatMemoryService.chatWithMemory(request.message(), request.conversationId());
     }
 }
