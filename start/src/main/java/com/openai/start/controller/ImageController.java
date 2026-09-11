@@ -16,7 +16,7 @@ public class ImageController {
         this.imageAIService = imageAIService;
     }
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload-recognize", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Выбор JPEG файла на распознавание", description = "Загрузите файл только формат JPEG")
     public ResponseEntity<?> uploadImage(@RequestPart("question") String question, @RequestPart("file") MultipartFile file) {
         if (file.isEmpty()) {
