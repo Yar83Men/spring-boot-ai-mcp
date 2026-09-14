@@ -1,6 +1,7 @@
 package com.openai.start.controller;
 
 import com.openai.start.dto.InMemoryChatRequest;
+import com.openai.start.dto.VectorStoreAIResponse;
 import com.openai.start.dto.VectorStoreRequest;
 import com.openai.start.entity.InMemoryChatEntity;
 import com.openai.start.service.ChatAIService;
@@ -65,7 +66,7 @@ public class ChatController {
     @PostMapping("/get-answer-from-vector-store")
     @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, " +
             "получение структурированной информации по данным с RAG хранилища, ранее загруженным данным")
-    public String vectorStore(@NonNull @RequestBody VectorStoreRequest request) {
+    public VectorStoreAIResponse vectorStore(@NonNull @RequestBody VectorStoreRequest request) {
         return regStoreService.getFromVectorStore(request.question());
     }
 

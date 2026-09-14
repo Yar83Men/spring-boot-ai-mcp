@@ -1,5 +1,6 @@
 package com.openai.start.controller;
 
+import com.openai.start.dto.WeatherAIResponse;
 import com.openai.start.dto.WeatherRequest;
 import com.openai.start.service.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,7 +18,7 @@ public class WeatherController {
 
     @PostMapping("/city")
     @Operation(summary = "Получение погоды в городе", description = "Используются @Tool")
-    public String getWeather(@NonNull @RequestBody WeatherRequest request) {
+    public WeatherAIResponse getWeather(@NonNull @RequestBody WeatherRequest request) {
         return weatherService.process(request);
     }
 }

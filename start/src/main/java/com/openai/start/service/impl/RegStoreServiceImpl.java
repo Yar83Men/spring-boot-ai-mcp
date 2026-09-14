@@ -1,5 +1,6 @@
 package com.openai.start.service.impl;
 
+import com.openai.start.dto.VectorStoreAIResponse;
 import com.openai.start.service.RegStoreService;
 import org.jspecify.annotations.NonNull;
 import org.springframework.ai.chat.client.ChatClient;
@@ -21,7 +22,10 @@ public class RegStoreServiceImpl implements RegStoreService {
     }
 
     @Override
-    public String getFromVectorStore(@NonNull String question) {
-        return chatClient.prompt().user(question).call().content();
+    public VectorStoreAIResponse getFromVectorStore(@NonNull String question) {
+        return chatClient.prompt()
+                .user(question)
+                .call()
+                .entity(VectorStoreAIResponse.class);
     }
 }

@@ -1,5 +1,6 @@
 package com.openai.start.service.impl;
 
+import com.openai.start.dto.WeatherAIResponse;
 import com.openai.start.dto.WeatherRequest;
 import com.openai.start.dto.WeatherResponse;
 import com.openai.start.service.WeatherService;
@@ -60,7 +61,7 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public String process(@NonNull WeatherRequest request) {
+    public WeatherAIResponse process(@NonNull WeatherRequest request) {
         LOGGER.info("Погода в городе-{}", request);
         final var systemMessage = new SystemMessage("Ты полезный AI ассистент отвечающий на вопросы о погоде в выбранном городе, " +
                 "отвечай кратко: город, температура, влажность, атмосферное давление, показатель ультра-фиолетового излучения, время наблюдения по Москве." +
@@ -71,7 +72,7 @@ public class WeatherServiceImpl implements WeatherService {
                 .prompt(new Prompt(List.of(systemMessage, userMessage)))
                 .tools(this)
                 .call()
-                .content();
+                .entity(WeatherAIResponse.class);
     }
 
     private int getIntValue(String response, String parameter) {

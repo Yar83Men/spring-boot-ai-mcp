@@ -17,7 +17,7 @@ public class ImageController {
     }
 
     @PostMapping(value = "/upload-recognize", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Выбор JPEG файла на распознавание", description = "Загрузите файл только формат JPEG")
+    @Operation(summary = "Выбор JPEG файла на распознавание", description = "Загрузите файл только формат JPEG, PNG, WEBP, GIF")
     public ResponseEntity<?> uploadImage(@RequestPart("question") String question, @RequestPart("file") MultipartFile file) {
         if (file.isEmpty()) {
             return org.springframework.http.ResponseEntity.badRequest().body("Пустой файл");
