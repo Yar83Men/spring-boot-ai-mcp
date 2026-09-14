@@ -14,6 +14,4 @@ public interface ChatAIService {
     List<String> chatList(@NonNull String director);
 
     Map<String, Object> chatMap(@NonNull String director);
-
-    String exchange(@NonNull String message);
 }

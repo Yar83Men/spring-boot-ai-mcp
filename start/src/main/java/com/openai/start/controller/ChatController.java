@@ -1,8 +1,8 @@
 package com.openai.start.controller;
 
-import com.openai.start.dto.InMemoryChatRequest;
-import com.openai.start.dto.VectorStoreAIResponse;
-import com.openai.start.dto.VectorStoreRequest;
+import com.openai.start.dto.chat.InMemoryChatRequest;
+import com.openai.start.dto.vector_store.VectorStoreAIResponse;
+import com.openai.start.dto.vector_store.VectorStoreRequest;
 import com.openai.start.entity.InMemoryChatEntity;
 import com.openai.start.service.ChatAIService;
 import com.openai.start.service.ChatMemoryService;
@@ -55,12 +55,6 @@ public class ChatController {
             "построение списка фильмов режиссера в виде ассоциативного массива")
     public Map<String, Object> chatMap(@RequestParam(value = "director", defaultValue = "Джеймс Кэмерон") String director) {
         return chatAIService.chatMap(director);
-    }
-
-    @GetMapping("/exchange")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, курсы валют")
-    public String exchange(@RequestParam(value = "message", defaultValue = "Курс валют на дату ") String message) {
-        return chatAIService.exchange(message);
     }
 
     @PostMapping("/get-answer-from-vector-store")

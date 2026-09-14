@@ -1,8 +1,8 @@
 package com.openai.start.service.impl;
 
-import com.openai.start.dto.WeatherAIResponse;
-import com.openai.start.dto.WeatherRequest;
-import com.openai.start.dto.WeatherResponse;
+import com.openai.start.dto.weather.WeatherAIResponse;
+import com.openai.start.dto.weather.WeatherRequest;
+import com.openai.start.dto.weather.WeatherResponse;
 import com.openai.start.service.WeatherService;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
@@ -12,6 +12,8 @@ import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import tools.jackson.databind.ObjectMapper;
@@ -24,6 +26,8 @@ public class WeatherServiceImpl implements WeatherService {
     private final RestClient restClient;
     private final ObjectMapper objectMapper;
     private final ChatClient chatClient;
+    @Value("classpath:/info/weather.txt")
+    private Resource weatherInfo;
     private final Logger LOGGER = LoggerFactory.getLogger(WeatherServiceImpl.class);
     private final String CURRENT_CONDITION = "current_condition";
     private final String FORMAT_REQUEST = "{}?format=j2&lang=ru";
@@ -63,9 +67,7 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public WeatherAIResponse process(@NonNull WeatherRequest request) {
         LOGGER.info("Погода в городе-{}", request);
-        final var systemMessage = new SystemMessage("Ты полезный AI ассистент отвечающий на вопросы о погоде в выбранном городе, " +
-                "отвечай кратко: город, температура, влажность, атмосферное давление, показатель ультра-фиолетового излучения, время наблюдения по Москве." +
-                "Посоветуй одежду по погоде кратко");
+        final var systemMessage = new SystemMessage(weatherInfo);
         final var userMessage = new UserMessage(request.city());
 
         return chatClient

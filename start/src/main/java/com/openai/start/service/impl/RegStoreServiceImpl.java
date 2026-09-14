@@ -1,6 +1,6 @@
 package com.openai.start.service.impl;
 
-import com.openai.start.dto.VectorStoreAIResponse;
+import com.openai.start.dto.vector_store.VectorStoreAIResponse;
 import com.openai.start.service.RegStoreService;
 import org.jspecify.annotations.NonNull;
 import org.springframework.ai.chat.client.ChatClient;
@@ -18,7 +18,14 @@ public class RegStoreServiceImpl implements RegStoreService {
 
     public RegStoreServiceImpl(ChatClient.Builder builder, VectorStore vectorStore) {
         this.vectorStore = vectorStore;
-        this.chatClient = builder.defaultAdvisors(QuestionAnswerAdvisor.builder(vectorStore).searchRequest(SearchRequest.builder().topK(TOP_K).similarityThreshold(SIMILARITY_THRESHOLD).build()).build()).build();
+        this.chatClient = builder
+                .defaultAdvisors(QuestionAnswerAdvisor.builder(vectorStore)
+                        .searchRequest(SearchRequest.builder()
+                                .topK(TOP_K)
+                                .similarityThreshold(SIMILARITY_THRESHOLD)
+                                .build())
+                        .build())
+                .build();
     }
 
     @Override

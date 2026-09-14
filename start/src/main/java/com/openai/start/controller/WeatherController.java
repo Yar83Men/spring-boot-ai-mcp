@@ -1,7 +1,7 @@
 package com.openai.start.controller;
 
-import com.openai.start.dto.WeatherAIResponse;
-import com.openai.start.dto.WeatherRequest;
+import com.openai.start.dto.weather.WeatherAIResponse;
+import com.openai.start.dto.weather.WeatherRequest;
 import com.openai.start.service.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.jspecify.annotations.NonNull;

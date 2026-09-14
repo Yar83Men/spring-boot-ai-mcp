@@ -1,4 +1,4 @@
-package com.openai.start.dto;
+package com.openai.start.dto.vector_store;
 
 import java.util.List;
 

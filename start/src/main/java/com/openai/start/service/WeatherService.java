@@ -1,8 +1,8 @@
 package com.openai.start.service;
 
-import com.openai.start.dto.WeatherAIResponse;
-import com.openai.start.dto.WeatherRequest;
-import com.openai.start.dto.WeatherResponse;
+import com.openai.start.dto.weather.WeatherAIResponse;
+import com.openai.start.dto.weather.WeatherRequest;
+import com.openai.start.dto.weather.WeatherResponse;
 import org.jspecify.annotations.NonNull;
 
 public interface WeatherService {

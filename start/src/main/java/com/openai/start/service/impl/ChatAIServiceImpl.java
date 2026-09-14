@@ -16,8 +16,6 @@ import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -94,19 +92,5 @@ public class ChatAIServiceImpl implements ChatAIService {
                 .prompt(finalPrompt)
                 .call();
         return mapOutputConverter.convert(Objects.requireNonNull(response.content()));
-    }
-
-    @Override
-    public String exchange(@NonNull String message) {
-        final var promptTemplate = new PromptTemplate(exhangeResource);
-        final var map = new HashMap<String, Object>() {{
-            put("question", message + " " + LocalDate.now());
-            put("context", variant);
-        }};
-        final var userMessage = promptTemplate.create(map).getUserMessage();
-        final Prompt finalPrompt = new Prompt(List.of(userMessage, systemMessage));
-        return chatClient.prompt(finalPrompt)
-                .call()
-                .content();
     }
 }
