@@ -22,3 +22,6 @@ spring:
     vectorstore:
       pgvector:
         initialize-schema: true
+
+management:
+  endpoints.web.exposure.include: health,info,prometheus
