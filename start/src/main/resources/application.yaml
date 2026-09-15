@@ -21,20 +21,21 @@ spring:
     mcp:
       client:
         enabled: true
-        name: selenium-client
+        name: playwright-client
         request-timeout: 60s
-        type: SYNC
+#        type: SYNC
         toolcallback:
           enabled: true
         stdio:
           connections:
-            selenium-search:
+            playwright:
               command: cmd.exe
               args:
                 - "/c"
                 - "npx"
                 - "-y"
-                - "@angiejones/mcp-selenium"
+#                - "@angiejones/mcp-selenium"
+                - "@playwright/mcp@latest"
 
     vectorstore:
       pgvector:
