@@ -6,4 +6,5 @@
 ### Сохранение чата в памяти (Spring AI + InMemoryChatRepository);
 ### Получение курсов валют и расчеты;
 ### Метрики использования токенов в Prometheus + Graphana;
+### Парсинг и поиск по web страницам MCP client, MCP server PlayWright;
 #### swagger http://localhost:8080/swagger-ui/index.html
