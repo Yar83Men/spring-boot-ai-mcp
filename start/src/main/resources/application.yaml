@@ -18,6 +18,23 @@ spring:
         options:
           model: gpt-5.6-luna
           reasoning-effort: none
+    mcp:
+      client:
+        enabled: true
+        name: selenium-client
+        request-timeout: 60s
+        type: SYNC
+        toolcallback:
+          enabled: true
+        stdio:
+          connections:
+            selenium-search:
+              command: cmd.exe
+              args:
+                - "/c"
+                - "npx"
+                - "-y"
+                - "@angiejones/mcp-selenium"
 
     vectorstore:
       pgvector:

@@ -12,6 +12,7 @@ import com.openai.start.entity.ResponseEntity;
 import com.openai.start.service.impl.RegStoreServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.jspecify.annotations.NonNull;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,5 +70,11 @@ public class ChatController {
             "сохранение до 10-ти диалогов в памяти")
     public InMemoryChatEntity chatWithMemory(@NonNull @RequestBody InMemoryChatRequest request) {
         return chatMemoryService.chatWithMemory(request.message(), request.conversationId());
+    }
+
+    @PostMapping("/chat-details")
+    @Operation(summary = "Детализация запроса")
+    private ChatResponse chatResponse(@NonNull @RequestBody String message) {
+        return chatAIService.getAIDetails(message);
     }
 }

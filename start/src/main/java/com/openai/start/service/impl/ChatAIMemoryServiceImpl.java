@@ -7,6 +7,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.SystemMessage;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class ChatAIMemoryServiceImpl implements ChatMemoryService {
                 .defaultAdvisors(MessageChatMemoryAdvisor
                         .builder(chatMemory)
                         .build())
+                .defaultOptions(ChatOptions.builder().temperature(0.2))
                 .build();
     }
 

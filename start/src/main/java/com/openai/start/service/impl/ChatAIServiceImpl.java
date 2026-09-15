@@ -7,13 +7,12 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.converter.ListOutputConverter;
 import org.springframework.ai.converter.MapOutputConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.support.DefaultConversionService;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +22,6 @@ import java.util.Objects;
 @Service
 public class ChatAIServiceImpl implements ChatAIService {
     private final ChatClient chatClient;
-    @Value("classpath:/prompts/exchange.st")
-    private Resource exhangeResource;
-    @Value("classpath:/docs/exchanges-variant.txt")
-    private Resource variant;
-
 
     final SystemMessage systemMessage = new SystemMessage("Ответ должен быть кратким, не детализированным");
     final MapOutputConverter mapOutputConverter = new MapOutputConverter();
@@ -92,5 +86,13 @@ public class ChatAIServiceImpl implements ChatAIService {
                 .prompt(finalPrompt)
                 .call();
         return mapOutputConverter.convert(Objects.requireNonNull(response.content()));
+    }
+
+    @Override
+    public ChatResponse getAIDetails(@NonNull String message) {
+        return chatClient.prompt()
+                .user(message)
+                .call()
+                .chatResponse();
     }
 }
