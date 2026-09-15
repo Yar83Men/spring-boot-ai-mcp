@@ -17,7 +17,7 @@ public class WebSearchAiController {
         this.service = service;
     }
 
-    @PostMapping("/selenium-web-search")
+    @PostMapping("/web-search")
     public WebSearchResponse seleniumWebSearch(@RequestBody WebSearchRequest request) {
         return service.seleniumSearch(request);
     }

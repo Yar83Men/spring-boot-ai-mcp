@@ -1,4 +1,6 @@
 package com.openai.start.dto.web_search;
 
-public record WebSearchResponse(String url, String result) {
+import java.util.List;
+
+public record WebSearchResponse(String url, List<String> result) {
 }
