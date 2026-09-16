@@ -15,15 +15,17 @@ spring:
     openai:
       api-key: ${OPEN_AI_KEY}
       chat:
+
         options:
           model: gpt-5.6-luna
           reasoning-effort: none
+
     mcp:
       client:
         enabled: true
         name: playwright-client
         request-timeout: 60s
-#        type: SYNC
+        #        type: SYNC
         toolcallback:
           enabled: true
         stdio:
@@ -34,7 +36,7 @@ spring:
                 - "/c"
                 - "npx"
                 - "-y"
-#                - "@angiejones/mcp-selenium"
+                #                - "@angiejones/mcp-selenium"
                 - "@playwright/mcp@latest"
 
     vectorstore:
@@ -43,3 +45,13 @@ spring:
 
 management:
   endpoints.web.exposure.include: health,info,prometheus
+
+
+#logging:
+#  level:
+#    # Логирование логики памяти Spring AI и Redis-репозитория
+#    org.springframework.ai.chat.memory: DEBUG
+#    org.springframework.ai.chat.memory.repository.redis: TRACE
+#
+#    # Если используется Jedis (стандарт для RedisChatMemoryRepository)
+#    redis.clients.jedis: DEBUG

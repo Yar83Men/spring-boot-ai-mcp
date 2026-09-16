@@ -16,13 +16,12 @@ import org.springframework.stereotype.Service;
 public class ChatAIMemoryServiceImpl implements ChatMemoryService {
     private final ChatClient chatClient;
 
-
     public ChatAIMemoryServiceImpl(ChatClient.Builder builder, ChatMemory chatMemory) {
         this.chatClient = builder
                 .defaultAdvisors(MessageChatMemoryAdvisor
                         .builder(chatMemory)
                         .build())
-                .defaultOptions(ChatOptions.builder().temperature(0.2))
+                .defaultOptions(ChatOptions.builder().temperature(1.0))
                 .build();
     }
 
@@ -36,4 +35,6 @@ public class ChatAIMemoryServiceImpl implements ChatMemoryService {
                 .call()
                 .entity(InMemoryChatEntity.class);
     }
+
+
 }
