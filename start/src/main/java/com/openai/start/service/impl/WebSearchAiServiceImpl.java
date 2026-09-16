@@ -40,7 +40,7 @@ public class WebSearchAiServiceImpl implements WebSearchAiService {
         final Prompt prompt = template.create(Map.of("url", request.url(),
                 "action", request.action(),
                 "offset", request.offset(),
-                "sort", request.sort()));
+                "sortBy", request.sortBy()));
         return chatClient.prompt(prompt)
                 .call()
                 .entity(WebSearchResponse.class);
