@@ -5,7 +5,7 @@
 2. navigate на {url}
 3. Выполни действие: {action}
 4. Количество элементов: {offset}
-5. Сортировка по: {sort}
+5. Сортировка по: {sortBy}
 6. Извлеки результат через get_element_text
 7. close_session
 

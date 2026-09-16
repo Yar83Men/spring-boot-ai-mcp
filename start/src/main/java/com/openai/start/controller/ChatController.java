@@ -66,7 +66,7 @@ public class ChatController {
     }
 
     @PostMapping("/chat-with-memory")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, " +
+    @Operation(summary = "Сохранении диалога по conversationId в Redis", description = "Отвечает CHAT-GPT Luna 5.6, " +
             "сохранение до 10-ти диалогов в памяти")
     public InMemoryChatEntity chatWithMemory(@NonNull @RequestBody InMemoryChatRequest request) {
         return chatMemoryService.chatWithMemory(request.message(), request.conversationId());
