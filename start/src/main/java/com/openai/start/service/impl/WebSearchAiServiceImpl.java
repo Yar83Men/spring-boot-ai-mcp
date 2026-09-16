@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class WebSearchAiServiceImpl implements WebSearchAiService {
     private final ChatClient chatClient;
-    @Value("classpath:/prompts/selenium-search-prompt.txt")
+    @Value("classpath:/prompts/web-search-prompt.txt")
     private Resource seleniumSearchPrompt;
 
     public WebSearchAiServiceImpl(ChatClient.Builder builder, ObjectProvider<ToolCallbackProvider> toolCallbackProviders) {
@@ -35,9 +35,12 @@ public class WebSearchAiServiceImpl implements WebSearchAiService {
     }
 
     @Override
-    public WebSearchResponse seleniumSearch(@NotNull WebSearchRequest request) {
+    public WebSearchResponse webSearch(@NotNull WebSearchRequest request) {
         final PromptTemplate template = new PromptTemplate(seleniumSearchPrompt);
-        final Prompt prompt = template.create(Map.of("url", request.url(), "action", request.action()));
+        final Prompt prompt = template.create(Map.of("url", request.url(),
+                "action", request.action(),
+                "offset", request.offset(),
+                "sort", request.sort()));
         return chatClient.prompt(prompt)
                 .call()
                 .entity(WebSearchResponse.class);

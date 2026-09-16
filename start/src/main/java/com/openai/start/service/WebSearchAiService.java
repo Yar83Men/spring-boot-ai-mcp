@@ -5,5 +5,5 @@ import com.openai.start.dto.web_search.WebSearchResponse;
 import org.jspecify.annotations.NonNull;
 
 public interface WebSearchAiService {
-    WebSearchResponse seleniumSearch(@NonNull WebSearchRequest request);
+    WebSearchResponse webSearch(@NonNull WebSearchRequest request);
 }
