@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.openai.start.Constant.DEFAULT_URI;
+
 @RestController
-@RequestMapping("/api/v1/doc")
+@RequestMapping(DEFAULT_URI)
 public class DocumentController {
     private final DocumentService documentService;
 
@@ -19,7 +21,7 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/fila/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Сохранение файла в RAG", description = "Загрузите файл для хранения в RAG")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {

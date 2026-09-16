@@ -7,8 +7,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.jspecify.annotations.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import static com.openai.start.Constant.DEFAULT_URI;
+
 @RestController
-@RequestMapping("/api/v1/weather")
+@RequestMapping(DEFAULT_URI)
 public class WeatherController {
     private final WeatherService weatherService;
 
@@ -16,7 +18,7 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @PostMapping("/city")
+    @PostMapping("/weather/city")
     @Operation(summary = "Получение погоды в городе", description = "Используются @Tool")
     public WeatherAIResponse getWeather(@NonNull @RequestBody WeatherRequest request) {
         return weatherService.process(request);

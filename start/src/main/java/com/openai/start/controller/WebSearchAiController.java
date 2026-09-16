@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.openai.start.Constant.DEFAULT_URI;
+
 @RestController
-@RequestMapping("/api/v1/ai")
+@RequestMapping(DEFAULT_URI)
 public class WebSearchAiController {
     private final WebSearchAiService service;
 

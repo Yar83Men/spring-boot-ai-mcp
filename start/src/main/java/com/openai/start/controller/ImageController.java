@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.openai.start.Constant.DEFAULT_URI;
+
 @RestController
-@RequestMapping("/api/v1/image")
+@RequestMapping(DEFAULT_URI)
 public class ImageController {
     private final ImageAIService imageAIService;
 
@@ -16,7 +18,7 @@ public class ImageController {
         this.imageAIService = imageAIService;
     }
 
-    @PostMapping(value = "/upload-recognize", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/image/upload-recognize", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Выбор JPEG файла на распознавание", description = "Загрузите файл только формат JPEG, PNG, WEBP, GIF")
     public ResponseEntity<?> uploadImage(@RequestPart("question") String question, @RequestPart("file") MultipartFile file) {
         if (file.isEmpty()) {

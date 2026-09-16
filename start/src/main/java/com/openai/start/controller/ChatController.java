@@ -8,18 +8,18 @@ import com.openai.start.service.ChatAIService;
 import com.openai.start.service.ChatMemoryService;
 import com.openai.start.service.RegStoreService;
 import com.openai.start.service.impl.ChatAIServiceImpl;
-import com.openai.start.entity.ResponseEntity;
 import com.openai.start.service.impl.RegStoreServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.jspecify.annotations.NonNull;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import static com.openai.start.Constant.DEFAULT_URI;
+
 
 @RestController
-@RequestMapping("/api/v1/ai")
+@RequestMapping(DEFAULT_URI)
 public class ChatController {
     private final ChatAIService chatAIService;
     private final RegStoreService regStoreService;
@@ -35,45 +35,28 @@ public class ChatController {
 
     @PostMapping("/message")
     @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6")
-    public String answer(@RequestBody String question) {
+    public String answer(@Parameter(description = "Вопрос для получения ответа AI GPT") @RequestBody String question) {
         return chatAIService.answer(question);
-    }
-
-    @PostMapping("/prompt")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6")
-    public ResponseEntity prompt(@RequestBody String question) {
-        return chatAIService.prompt(question);
-    }
-
-    @GetMapping("/chat-list")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, построение списка фильмов режиссера")
-    public List<String> chatList(@RequestParam(value = "director", defaultValue = "Джеймс Кэмерон") String director) {
-        return chatAIService.chatList(director);
-    }
-
-    @GetMapping("/chat-map")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, " +
-            "построение списка фильмов режиссера в виде ассоциативного массива")
-    public Map<String, Object> chatMap(@RequestParam(value = "director", defaultValue = "Джеймс Кэмерон") String director) {
-        return chatAIService.chatMap(director);
     }
 
     @PostMapping("/get-answer-from-vector-store")
     @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, " +
             "получение структурированной информации по данным с RAG хранилища, ранее загруженным данным")
-    public VectorStoreAIResponse vectorStore(@NonNull @RequestBody VectorStoreRequest request) {
+    public VectorStoreAIResponse vectorStore(@Parameter(description = "Запрос на отработку данных с vector-store, " +
+            "предварительно загрузив в хранилище данные") @NonNull @RequestBody VectorStoreRequest request) {
         return regStoreService.getFromVectorStore(request.question());
     }
 
     @PostMapping("/chat-with-memory")
-    @Operation(summary = "Сохранении диалога по conversationId в Redis", description = "Отвечает CHAT-GPT Luna 5.6, " +
-            "сохранение до 10-ти диалогов в памяти")
-    public InMemoryChatEntity chatWithMemory(@NonNull @RequestBody InMemoryChatRequest request) {
+    @Operation(summary = "Сохранении диалога по conversationId в Redis", description = "Отвечает CHAT-GPT Luna 5.6")
+    public InMemoryChatEntity chatWithMemory(@Parameter(description = "Обработка данных сохраненных в redis",
+            example = "Первый запрос - меня зовут Иван Иванов 33 года,  потом в произвольной форме задаете вопрос, обязательно укажите conversationId")
+                                             @NonNull @RequestBody InMemoryChatRequest request) {
         return chatMemoryService.chatWithMemory(request.message(), request.conversationId());
     }
 
     @PostMapping("/chat-details")
-    @Operation(summary = "Детализация запроса")
+    @Operation(summary = "Детализация запроса, мета-данные запроса")
     private ChatResponse chatResponse(@NonNull @RequestBody String message) {
         return chatAIService.getAIDetails(message);
     }
