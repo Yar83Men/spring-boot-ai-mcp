@@ -7,19 +7,30 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.tool.ToolCallback;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 public class ExchangeServiceImpl implements ExchangeService {
     private final ChatClient chatClient;
 
-    public ExchangeServiceImpl(ChatClient.Builder builder) {
-        this.chatClient = builder.build();
+    public ExchangeServiceImpl(ChatClient.Builder builder, ObjectProvider<ToolCallbackProvider> toolCallbackProviders) {
+        final var callbacks = toolCallbackProviders.stream()
+                .map(ToolCallbackProvider::getToolCallbacks)
+                .flatMap(Arrays::stream)
+                .toArray(ToolCallback[]::new);
+        this.chatClient = builder
+                .defaultToolCallbacks(callbacks)
+                .build();
     }
 
     @Override
     public ExchangeResponse exchange(@NonNull ExchangeRequest request) {
-        final var userMessage = new UserMessage(String.format("Конвертируй с валюты %s на валюту %s количество %s",
+        final var userMessage = new UserMessage(String.format("Конвертируй с валюты %s на валюту %s количество %s, посчитай коэффициент соотношения курсов валют",
                 request.fromExchange(),
                 request.toExchange(),
                 request.amountToConvert().toString()));

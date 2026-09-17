@@ -1,5 +1,6 @@
 package com.openai.server.configuration;
 
+import com.openai.server.service.ExchangeCbrToolService;
 import com.openai.server.service.WeatherApiToolService;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
@@ -13,6 +14,13 @@ public class McpServerConfiguration {
     public ToolCallbackProvider weatherToolCallbackProvider(WeatherApiToolService weatherApiToolService) {
         return MethodToolCallbackProvider.builder()
                 .toolObjects(weatherApiToolService)
+                .build();
+    }
+
+    @Bean
+    public ToolCallbackProvider exchangeCbrToolCallbackProvider(ExchangeCbrToolService exchangeCbrToolService) {
+        return MethodToolCallbackProvider.builder()
+                .toolObjects(exchangeCbrToolService)
                 .build();
     }
 }

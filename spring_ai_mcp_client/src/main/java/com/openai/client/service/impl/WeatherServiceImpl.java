@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 public class WeatherServiceImpl implements WeatherService {
     private final ChatClient chatClient;
-    @Value("classpath:/info/weather.txt")
+    @Value("classpath:/prompts/weather.txt")
     private Resource weatherInfo;
     private final Logger LOGGER = LoggerFactory.getLogger(WeatherServiceImpl.class);
 
