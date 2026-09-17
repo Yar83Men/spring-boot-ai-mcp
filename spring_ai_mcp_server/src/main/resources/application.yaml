@@ -1,4 +1,6 @@
 spring:
+  main:
+    banner-mode: off
   application:
     name: spring-ai-mcp-server
   ai:
@@ -8,9 +10,16 @@ spring:
       server:
         name: mcp-sse-server
         version: 1.0.0
-        protocol: sse
+        protocol: SSE
+        sse-endpoint: /sse
+        sse-message-endpoint: /mcp/message
 
 server:
   port: 8090
+
+weather:
+  api-url: api.openweathermap.org
+  api-path: /data/2.5/weather
+  api-key: ${WEATHER_API_KEY}
 
 

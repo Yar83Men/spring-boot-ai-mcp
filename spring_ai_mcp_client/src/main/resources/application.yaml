@@ -38,6 +38,11 @@ spring:
                 - "-y"
                 #                - "@angiejones/mcp-selenium"
                 - "@playwright/mcp@latest"
+        sse:
+          connections:
+            weather:
+              url: http://localhost:8090
+              sse-endpoint: /sse
 
     vectorstore:
       pgvector:

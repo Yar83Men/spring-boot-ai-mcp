@@ -21,6 +21,6 @@ public class WeatherController {
     @PostMapping("/weather/city")
     @Operation(summary = "Получение погоды в городе", description = "Используются @Tool")
     public WeatherAIResponse getWeather(@NonNull @RequestBody WeatherRequest request) {
-        return weatherService.process(request);
+        return weatherService.getWeather(request);
     }
 }
