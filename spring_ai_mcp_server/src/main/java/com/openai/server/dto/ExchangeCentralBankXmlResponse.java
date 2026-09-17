@@ -45,6 +45,7 @@ public record ExchangeCentralBankXmlResponse(
             BigDecimal value,
 
             @JacksonXmlProperty(localName = "VunitRate")
+            @JsonPropertyDescription("Курс рубля(RUB) РФ за 1 единицу иностранной валюты, используется для конвертации")
             @JsonDeserialize(using = CommaBigDecimalDeserializer.class)
             BigDecimal vunitRate) {}
 }

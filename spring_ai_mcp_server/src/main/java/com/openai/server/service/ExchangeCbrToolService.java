@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -28,7 +29,8 @@ public class ExchangeCbrToolService {
     }
 
     @Tool(description = "Получение курса валют ЦБ РФ на указанную в запросе дату")
-    public ExchangeCentralBankXmlResponse getCbrExchangeOnDate(@NotNull LocalDate date) {
+    public ExchangeCentralBankXmlResponse getCbrExchangeOnDate(
+            @ToolParam(description = "Дата актуального курса валют") @NotNull LocalDate date) {
         final var dateFormate = date.format(DateTimeFormatter.ofPattern(DATE_FORMAT));
         LOGGER.info("Запрос курсов ЦБ на {}", dateFormate);
 
