@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: spring-ai-mcp-server
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+    mcp:
+      server:
+        name: mcp-sse-server
+        version: 1.0.0
+        protocol: sse
+
+server:
+  port: 8090
+
+
