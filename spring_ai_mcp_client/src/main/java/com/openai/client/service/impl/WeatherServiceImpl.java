@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -27,13 +28,18 @@ public class WeatherServiceImpl implements WeatherService {
     @Value("classpath:/prompts/weather.txt")
     private Resource weatherInfo;
     private final Logger LOGGER = LoggerFactory.getLogger(WeatherServiceImpl.class);
+    private final double chatOptionsTemperature;
 
-    public WeatherServiceImpl(ChatClient.Builder builder, ObjectProvider<ToolCallbackProvider> toolCallbackProviders) {
+    public WeatherServiceImpl(ChatClient.Builder builder,
+                              ObjectProvider<ToolCallbackProvider> toolCallbackProviders,
+                              @Value("${model.chat.options.temperature}") double chatOptionsTemperature) {
+        this.chatOptionsTemperature = chatOptionsTemperature;
         final var callbacks = toolCallbackProviders.stream()
                 .map(ToolCallbackProvider::getToolCallbacks)
                 .flatMap(Arrays::stream)
                 .toArray(ToolCallback[]::new);
          this.chatClient = builder
+                 .defaultOptions(ChatOptions.builder().temperature(chatOptionsTemperature))
                  .defaultToolCallbacks(callbacks)
                  .build();
     }

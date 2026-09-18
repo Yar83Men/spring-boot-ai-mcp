@@ -9,19 +9,24 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class ChatAIMemoryServiceImpl implements ChatMemoryService {
     private final ChatClient chatClient;
+    private final double chatOptionsTemperature;
 
-    public ChatAIMemoryServiceImpl(ChatClient.Builder builder, ChatMemory chatMemory) {
+    public ChatAIMemoryServiceImpl(ChatClient.Builder builder,
+                                   ChatMemory chatMemory,
+                                   @Value("${model.chat.options.temperature}") double chatOptionsTemperature) {
+        this.chatOptionsTemperature = chatOptionsTemperature;
         this.chatClient = builder
                 .defaultAdvisors(MessageChatMemoryAdvisor
                         .builder(chatMemory)
                         .build())
-                .defaultOptions(ChatOptions.builder().temperature(1.0))
+                .defaultOptions(ChatOptions.builder().temperature(chatOptionsTemperature))
                 .build();
     }
 

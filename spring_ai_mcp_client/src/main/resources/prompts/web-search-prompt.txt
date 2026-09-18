@@ -4,7 +4,7 @@
 1. start_browser с browser="chrome" и options.headless=true
 2. navigate на {url}
 3. Выполни действие: {action}
-4. Количество элементов: {offset}
+4. Количество элементов: {limit}
 5. Сортировка по: {sortBy}
 6. Извлеки результат через get_element_text
 7. close_session
