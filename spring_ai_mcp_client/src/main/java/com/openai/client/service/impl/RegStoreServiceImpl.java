@@ -4,28 +4,15 @@ import com.openai.client.dto.vector_store.VectorStoreAIResponse;
 import com.openai.client.service.RegStoreService;
 import org.jspecify.annotations.NonNull;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
-import org.springframework.ai.vectorstore.SearchRequest;
-import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegStoreServiceImpl implements RegStoreService {
     private final ChatClient chatClient;
-    private final VectorStore vectorStore;
-    private final int TOP_K = 5;
-    private final double SIMILARITY_THRESHOLD = 0.7;
 
-    public RegStoreServiceImpl(ChatClient.Builder builder, VectorStore vectorStore) {
-        this.vectorStore = vectorStore;
-        this.chatClient = builder
-                .defaultAdvisors(QuestionAnswerAdvisor.builder(vectorStore)
-                        .searchRequest(SearchRequest.builder()
-                                .topK(TOP_K)
-                                .similarityThreshold(SIMILARITY_THRESHOLD)
-                                .build())
-                        .build())
-                .build();
+    public RegStoreServiceImpl(@Qualifier("vectorStoreChatClient") ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @Override

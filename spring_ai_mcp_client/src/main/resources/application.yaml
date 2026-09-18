@@ -56,6 +56,10 @@ model:
     options:
       temperature: 1.0
 
+vector-store:
+  top-k: 5
+  similarity-threshold: 0.7
+
 
 #logging:
 #  level:
