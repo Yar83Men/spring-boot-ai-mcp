@@ -36,7 +36,7 @@ public class WebSearchAiServiceImpl implements WebSearchAiService {
 
         this.chatClient = builder
                 .defaultOptions(ChatOptions.builder().temperature(chatOptionsTemperature))
-                .defaultToolCallbacks(callbacks)
+                .defaultTools((Object[]) callbacks)
                 .build();
     }
 

@@ -25,7 +25,7 @@ public class DocumentServiceImpl implements DocumentService {
         try {
             final var resource = new InputStreamResource(file.getInputStream());
             final var pdfReader = new TikaDocumentReader(resource);
-            final var textSplitter = new TokenTextSplitter();
+            final var textSplitter = TokenTextSplitter.builder().build();
             vectorStore.accept(textSplitter.apply(pdfReader.get()));
             LOG.info("Данные PDF успешно сохранены в vectorStore");
         } catch (Exception ex) {

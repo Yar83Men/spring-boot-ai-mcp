@@ -40,7 +40,7 @@ public class WeatherServiceImpl implements WeatherService {
                 .toArray(ToolCallback[]::new);
          this.chatClient = builder
                  .defaultOptions(ChatOptions.builder().temperature(chatOptionsTemperature))
-                 .defaultToolCallbacks(callbacks)
+                 .defaultTools((Object[]) callbacks)
                  .build();
     }
 
