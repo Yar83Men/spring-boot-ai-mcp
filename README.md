@@ -1,4 +1,4 @@
-### Spring AI приложение взаимодействует с OPENAPI Chat-GPT-5.6 Luna;
+### Spring AI приложение взаимодействует с OPENAPI Chat-GPT-5.6;
 #### Получение разного формата ответов (Spring AI);
 #### Получение показателей погоды по определенному времени (Weather api + Spring AI);
 #### Хранение и обработка данных в RAG хранилище (PG-Vector + Spring AI + Docker-Compose + Tika);
