@@ -10,7 +10,7 @@ spring:
     compose:
       enabled: true
       file: compose.yml
-      lifecycle-management: start_and_stop
+      lifecycle-management: start_only
   ai:
     openai:
       api-key: ${OPEN_AI_KEY}
@@ -29,15 +29,7 @@ spring:
         toolcallback:
           enabled: true
         stdio:
-          connections:
-            playwright:
-              command: cmd.exe
-              args:
-                - "/c"
-                - "npx"
-                - "-y"
-                #                - "@angiejones/mcp-selenium"
-                - "@playwright/mcp@latest"
+          servers-configuration: classpath:servers/mcp-servers.json
         sse:
           connections:
             weather:

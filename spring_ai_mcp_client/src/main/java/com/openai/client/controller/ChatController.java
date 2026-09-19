@@ -1,9 +1,7 @@
 package com.openai.client.controller;
 
 import com.openai.client.dto.chat.InMemoryChatRequest;
-import com.openai.client.dto.vector_store.VectorStoreAIResponse;
 import com.openai.client.dto.vector_store.VectorStoreRequest;
-import com.openai.client.entity.InMemoryChatEntity;
 import com.openai.client.service.ChatAIService;
 import com.openai.client.service.ChatMemoryService;
 import com.openai.client.service.RegStoreService;
@@ -12,10 +10,10 @@ import com.openai.client.service.impl.RegStoreServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.jspecify.annotations.NonNull;
-import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.openai.client.constant.Constant.DEFAULT_URI;
+import static com.openai.client.constant.Constant.*;
 
 
 @RestController
@@ -34,30 +32,29 @@ public class ChatController {
     }
 
     @PostMapping("/message")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6")
-    public String answer(@Parameter(description = "Вопрос для получения ответа AI GPT") @RequestBody String question) {
-        return chatAIService.answer(question);
+    @Operation(summary = REQUEST_TO_OPEN_API_TEXT, description = ANSWER_FROM_OPEN_API_TEXT)
+    public ResponseEntity<?> answer(@Parameter(description = ANSWER_FROM_OPEN_API_TEXT) @RequestBody String question) {
+        return ResponseEntity.ok(chatAIService.answer(question));
     }
 
     @PostMapping("/get-answer-from-vector-store")
-    @Operation(summary = "Запрос на openai", description = "Отвечает CHAT-GPT Luna 5.6, " +
-            "получение структурированной информации по данным с RAG хранилища, ранее загруженным данным")
-    public VectorStoreAIResponse vectorStore(@Parameter(description = "Запрос на отработку данных с vector-store, " +
+    @Operation(summary = REQUEST_TO_OPEN_API_TEXT, description = ANSWER_FROM_OPEN_API_TEXT + CONTROLLER_DESCRIPTION_RAG)
+    public ResponseEntity<?> vectorStore(@Parameter(description = "Запрос на отработку данных с vector-store, " +
             "предварительно загрузив в хранилище данные") @NonNull @RequestBody VectorStoreRequest request) {
-        return regStoreService.getFromVectorStore(request.question());
+        return ResponseEntity.ok(regStoreService.getFromVectorStore(request.question()));
     }
 
     @PostMapping("/chat-with-memory")
-    @Operation(summary = "Сохранении диалога по conversationId в Redis", description = "Отвечает CHAT-GPT Luna 5.6")
-    public InMemoryChatEntity chatWithMemory(@Parameter(description = "Обработка данных сохраненных в redis",
-            example = "Первый запрос - меня зовут Иван Иванов 33 года,  потом в произвольной форме задаете вопрос, обязательно укажите conversationId")
-                                             @NonNull @RequestBody InMemoryChatRequest request) {
-        return chatMemoryService.chatWithMemory(request.message(), request.conversationId());
+    @Operation(summary = CONTROLLER_REDIS_TEXT, description = ANSWER_FROM_OPEN_API_TEXT)
+    public ResponseEntity<?> chatWithMemory(@Parameter(description = "Обработка данных сохраненных в redis",
+            example = EXAMPLE_REQUEST_FOR_MEMORY_CHAT)
+                                            @NonNull @RequestBody InMemoryChatRequest request) {
+        return ResponseEntity.ok(chatMemoryService.chatWithMemory(request.message(), request.conversationId()));
     }
 
     @PostMapping("/chat-details")
     @Operation(summary = "Детализация запроса, мета-данные запроса")
-    private ChatResponse chatResponse(@NonNull @RequestBody String message) {
-        return chatAIService.getAIDetails(message);
+    private ResponseEntity<?> chatResponse(@NonNull @RequestBody String message) {
+        return ResponseEntity.ok(chatAIService.getAIDetails(message));
     }
 }

@@ -1,8 +1,8 @@
 package com.openai.client.controller;
 
 import com.openai.client.dto.exchage.ExchangeRequest;
-import com.openai.client.dto.exchage.ExchangeResponse;
 import com.openai.client.service.ExchangeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class ExchangeController {
     }
 
     @PostMapping("/exchange")
-    ExchangeResponse exchange(@RequestBody ExchangeRequest request) {
-        return exchangeService.exchange(request);
+    public ResponseEntity<?> exchange(@RequestBody ExchangeRequest request) {
+        return ResponseEntity.ok(exchangeService.exchange(request));
     }
 }
