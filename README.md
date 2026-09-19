@@ -7,6 +7,7 @@
 #### Получение курсов валют и расчеты;
 #### Метрики использования токенов в Prometheus + Graphana;
 #### Парсинг и поиск по web страницам MCP client, MCP server PlayWright;
+#### Создание, удаление и наполнение файлов, MCP server-filesystem;
 #### swagger http://localhost:8080/swagger-ui/index.html
 
 #### Зависимости проекта:
