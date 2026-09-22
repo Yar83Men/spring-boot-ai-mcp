@@ -22,4 +22,10 @@ weather:
   api-path: /data/2.5/weather
   api-key: ${WEATHER_API_KEY}
 
+gmail:
+  host: imap.gmail.com
+  port: 993
+  user: ${GMAIL_USER}
+  password: ${GMAIL_APP_PASSWORD}
+
 
