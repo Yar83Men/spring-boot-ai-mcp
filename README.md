@@ -8,6 +8,7 @@
 #### Метрики использования токенов в Prometheus + Graphana;
 #### Парсинг и поиск по web страницам MCP client, MCP server PlayWright;
 #### Создание, удаление и наполнение файлов, MCP server-filesystem;
+#### MCP server для получения тем писем с @gmail.com;
 #### swagger http://localhost:8080/swagger-ui/index.html
 
 #### Зависимости проекта:
